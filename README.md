@@ -26,22 +26,25 @@ The project use maven as compile tool, it does create a jar file auto-including 
 
     mvn assembly:assembly
 
-Will create the jar file: **./target/jersey-doc-generator-0.0.1-jar-with-dependencies.jar** depending on current
+Will create the jar file: `./target/jersey-doc-generator-0.0.1-jar-with-dependencies.jar` depending on current
 version (here version 0.0.1).
 
-If you want, you can safely rename this file into __jersey-doc-generator.jar__.
+If you want, you can safely rename this file into `jersey-doc-generator.jar`.
 
-__Other jar/content from this folder are not needed for the rest of this tutorial.__
+**Other jar/content from 'target' folder are not needed for the rest of this tutorial, you can safely delete them.**
 
 
 
 Usage
 -----
 
-Once you created the jar file (and everything went fine), we can start to use it. For that, let's imagine first a basic
-jersey project (we describe the structure):
+### Example ###
+
+Once you created the jar file (and everything went fine), we can start to use it. For that, imagine a basic
+jersey project:
   * com
     * mycompany
+      * User.java
       * RootResource.java
 
 So the package would be `com.mycompany` and the jersey root into `RootResource.java`, like this:
@@ -65,6 +68,10 @@ So the package would be `com.mycompany` and the jersey root into `RootResource.j
 We define a really simple function (User is an empty class) imple class 
 (the function content is empty for example purpose), 
 we can now use jersey-doc-generator (assuming project is located on %PRJ% folder).
+
+### Result ###
+
+**To start jersey-doc-generator:**
 
     java -jar ./target/jersey-doc-generator-0.0.1.jar -p "%PRJ%/build/classes" -c "com.mycompany.RootResource"
 
