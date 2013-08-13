@@ -63,7 +63,13 @@ So the package would be `com.mycompany` and the jersey root into `RootResource.j
 
 We define a really simple function (User is an empty class) imple class 
 (the function content is empty for example purpose), 
-jersey-doc-generator will produce the following result (we remove empty data to keep it readable here):
+we can now use jersey-doc-generator (assuming project is located on %PRJ% folder).
+
+    java -jar ./target/jersey-doc-generator-0.0.1.jar -p "%PRJ%/build/classes" -c "com.mycompany.RootResource"
+
+Where build/classes contains all *.class project file, with same structure (`com/mycompany/RootResource.class`).
+
+It will produce the following result:
 
     {
       "name" : "com.mycompany.RootResource",
@@ -115,11 +121,30 @@ jersey-doc-generator will produce the following result (we remove empty data to 
       "deprecated" : false
     }
 
-This example show how exaustive the jersey-doc-generator produce data, in fact, we use a template
-system to parse data because of quantity it's sometimes difficult to read even for small project.
-
-Now let's see how to produce this result.
+This example show how exaustive are data produced with jersey-doc-generator. Now you can use thoose data
+to create beautifull doc.
 
 
+Command line arguments
+----------------------
 
-**The project does not support auto-check root resource, you must provide it by yourselve**
+On this example we see the most basic case using -c and -p arguments, here is the full list:
+  * **--help**: display help
+  * **--class** or **-c**: Specify the class to start from (in the example: com.mycompany.RootResource)
+  * **--path** or **-p**: The path where builded content is located (for Eclipse: ./build/classes from project root)
+  * **--out--** or **-o**: The output file to specify
+
+
+
+
+Limitations
+-----------
+
+Some limitation exist on this project:
+  * The system is not able to find the root resource by itself, you must provide it yourself using -c parameter
+  * The system will generate a .jar file of your project if you are using it from *.class
+    * for this reason, jar executable (from JDK) should be OK from command line (type jar in command line to check)
+    * this program should be authorize to write on tmp folder (see --help to change that folder)
+  * If there is too many sub resource (include inside include inside include...) the system may raise a StackOverflowError
+
+Except the -c problem, all of them should almost never be a problem.
