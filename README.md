@@ -4,11 +4,12 @@ jersey-doc-generator
 Jersey-doc-generator is a simple java project to build documentation from an existing [Jersey](http://jersey.java.net/)
 project.
 
-The program generate a JSON file which can be easily used into templates to create documentation in HTML way.
+The program generate a JSON file which can be easily used to create documentation in HTML (or what you want).
 
 Features:
-  * Full url access map (including GET/POST/PUT/DELETE, ...)
+  * Full url access map (GET/POST/PUT/DELETE, ...)
   * Full parameter support (PathParam, FormParam, CookieParam, ...)
+  * Media type sypport (application/json, ...)
   * sub resource support
 
 If you use [jersey-doc-annotation](https://github.com/Deisss/jersey-doc-annotation) project, it also support:
@@ -130,10 +131,11 @@ Command line arguments
 
 On this example we see the most basic case using -c and -p arguments, here is the full list:
   * **--help**: display help
-  * **--class** or **-c**: Specify the class to start from (in the example: com.mycompany.RootResource)
-  * **--path** or **-p**: The path where builded content is located (for Eclipse: ./build/classes from project root)
-  * **--out--** or **-o**: The output file to specify
-
+  * **--class** or **-c**: Specify the class to start from (in the example: com.mycompany.RootResource) (+1 arg: the class name)
+  * **--path** or **-p**: The path where builded content is located (for Eclipse: ./build/classes from project root) (+1 arg: the path)
+  * **--out** or **-o**: Don't print result on console, print into given file (+1 arg: the path)
+  * **--type** or **-t**: The type (by default it's class), can be jar or war also, define the type of document the system have to parse
+  * **--tmp**: change the tmp folder, by default it's /tmp on linux, and C:\\ on windows.
 
 
 
