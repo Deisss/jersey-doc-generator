@@ -61,11 +61,10 @@ public class BaseParser {
 
 		// jersey-doc-annotation - @ApiDeprecated
 		// or java - @Deprecated
-		if(
-				(annotation instanceof ApiDeprecated) ||
-				(annotation instanceof Deprecated)
-		) {
+		if(annotation instanceof ApiDeprecated) {
 			found = true;
+			content.setDeprecated(true);
+		} else if(annotation instanceof Deprecated) {
 			content.setDeprecated(true);
 		}
 
