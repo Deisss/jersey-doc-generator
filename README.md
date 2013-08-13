@@ -12,7 +12,8 @@ Features:
   * sub resource support
 
 If you use [jersey-doc-annotation](https://github.com/Deisss/jersey-doc-annotation) project, it also support:
-  * Documentation on class/method
+  * Uniplemented/Deprecated tag support
+  * Documentation on class/method support
   * author/version support
 
 
@@ -60,9 +61,64 @@ So the package would be `com.mycompany` and the jersey root into `RootResource.j
       public User post(User user) {}
     }
 
-Quite simple class (the function content is empty for example purpose), 
-jersey-doc-generator will produce the following result:
+We define a really simple function (User is an empty class) imple class 
+(the function content is empty for example purpose), 
+jersey-doc-generator will produce the following result (we remove empty data to keep it readable here):
 
+    {
+      "name" : "com.mycompany.RootResource",
+      "path" : "core",
+      "doc" : "",
+      "author" : "",
+      "version" : "",
+      "produceList" : [ ],
+      "consumeList" : [ ],
+      "methodList" : [ {
+        "name" : "get",
+        "path" : "",
+        "doc" : "",
+        "author" : "",
+        "version" : "",
+        "produceList" : [ ],
+        "consumeList" : [ ],
+        "type" : "javax.ws.rs.GET",
+        "inputList" : [ ],
+        "output" : {
+          "name" : "java.lang.String"
+        },
+        "subResource" : false,
+        "unimplemented" : false,
+        "deprecated" : false
+      }, {
+        "name" : "post",
+        "path" : "",
+        "doc" : "",
+        "author" : "",
+        "version" : "",
+        "produceList" : [ "application/json" ],
+        "consumeList" : [ "application/json" ],
+        "type" : "javax.ws.rs.POST",
+        "inputList" : [ {
+          "name" : "",
+          "context" : "",
+          "type" : "com.mycompany.User",
+          "defaultValue" : ""
+        } ],
+        "output" : {
+          "name" : "com.mycompany.User"
+        },
+        "subResource" : false,
+        "unimplemented" : false,
+        "deprecated" : false
+      } ],
+      "unimplemented" : false,
+      "deprecated" : false
+    }
+
+This example show how exaustive the jersey-doc-generator produce data, in fact, we use a template
+system to parse data because of quantity it's sometimes difficult to read even for small project.
+
+Now let's see how to produce this result.
 
 
 
