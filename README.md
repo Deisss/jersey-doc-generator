@@ -133,9 +133,11 @@ This example show how exaustive are data produced with jersey-doc-generator. Now
 to create beautifull doc.
 
 
-### Presenting data ###
+### Rendering/presenting data ###
 
-After generating result, we recommand you [this template](https://github.com/Deisss/jersey-doc-template) to 
+Now you get raw data from your project, you probably want to make them readable by anyone...
+
+We recommand you [this template](https://github.com/Deisss/jersey-doc-template) to 
 present results in a readable way.
 
 This project is a simple html page with some javascript, able to load data stored into files, and show them to user.
