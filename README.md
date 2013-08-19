@@ -18,6 +18,10 @@ If you use [jersey-doc-annotation](https://github.com/Deisss/jersey-doc-annotati
   * author/version support
 
 
+__Note__: this project only create raw data, we recommand you
+[jersey-doc-template](https://github.com/Deisss/jersey-doc-template)
+for rendering them. See Rendering section below.
+
 
 Installation
 ------------
