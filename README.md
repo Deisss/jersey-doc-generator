@@ -172,3 +172,10 @@ Some limitation exist on this project:
   * If there is too many sub resource (include inside include inside include...) the system may raise a StackOverflowError
 
 Except the -c problem, all of them should almost never be a problem.
+
+
+
+Licence
+-------
+
+This project is licensed under MIT licence.
