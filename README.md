@@ -18,6 +18,10 @@ If you use [jersey-doc-annotation](https://github.com/Deisss/jersey-doc-annotati
   * author/version support
 
 
+__Note__: this project only create raw data, we recommand you
+[jersey-doc-template](https://github.com/Deisss/jersey-doc-template)
+for rendering them. See Rendering section below.
+
 
 Installation
 ------------
@@ -133,6 +137,17 @@ This example show how exaustive are data produced with jersey-doc-generator. Now
 to create beautifull doc.
 
 
+### Rendering/presenting data ###
+
+Now you get raw data from your project, you probably want to make them readable by anyone...
+
+We recommand you [this template](https://github.com/Deisss/jersey-doc-template) to 
+present results in a readable way.
+
+This project is a simple html page with some javascript, able to load data stored into files, and show them to user.
+
+
+
 Command line arguments
 ----------------------
 
@@ -157,3 +172,10 @@ Some limitation exist on this project:
   * If there is too many sub resource (include inside include inside include...) the system may raise a StackOverflowError
 
 Except the -c problem, all of them should almost never be a problem.
+
+
+
+Licence
+-------
+
+This project is licensed under MIT licence.
