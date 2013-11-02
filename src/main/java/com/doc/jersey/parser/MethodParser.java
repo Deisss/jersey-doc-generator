@@ -30,9 +30,9 @@ public class MethodParser {
 	 * @return The method content parsed
 	 */
 	public static MethodContent parse(Method method) {
-		MethodContent mc = new MethodContent();
+		MethodContent mc                  = new MethodContent();
 		Annotation[] annotationMethodList = method.getDeclaredAnnotations();
-		boolean found = false;
+		boolean found                     = false;
 
 		mc.setName(method.getName());
 
@@ -56,15 +56,14 @@ public class MethodParser {
 				found = true;
 				HttpMethod hm = (HttpMethod) annotationMethod;
 				String value = hm.value();
-				if(value != null) {
+				if(value != null && !value.equals("")) {
 					value = value.toUpperCase();
 				}
 				mc.setType("javax.ws.rs." + value);
 			}
 
 			// Complete already parsed annotation
-			boolean baseFound = BaseParser.complete(annotationMethod, mc);
-			if(baseFound) {
+			if(BaseParser.complete(annotationMethod, mc)) {
 				found = true;
 			}
 		}
@@ -98,7 +97,6 @@ public class MethodParser {
 			if(rt != null && !rt.equals(Void.TYPE)) {
 				ClassContent cc = ClassParser.parse(rt);
 				if(cc != null) {
-					found = true;
 					mc.setSubResource(true);
 					mc.setOutput(cc);
 				} else {
@@ -109,10 +107,6 @@ public class MethodParser {
 			}
 		}
 
-		if(!found) {
-			return null;
-		} else {
-			return mc;
-		}
+		return found ? mc : null;
 	}
 }

@@ -20,9 +20,10 @@ public class ClassParser {
 	 * @return The class parsed
 	 */
 	public static ClassContent parse(Class<?> cls) {
-		ClassContent cc = new ClassContent();
+		ClassContent cc             = new ClassContent();
 		Annotation[] annotationList = cls.getAnnotations();
-		boolean found = false;
+		Method[] methodList         = cls.getMethods();
+		boolean found               = false;
 
 		cc.setName(cls.getName());
 
@@ -32,22 +33,15 @@ public class ClassParser {
 		}
 
 		// Parsing method annotation
-		// Try/catch: skip unknow class (important)
-		try {
-			Method[] methodList = cls.getMethods();
-			for(Method method : methodList) {
-				MethodContent mc = MethodParser.parse(method);
-				if(mc != null) {
-					found = true;
-					cc.getMethodList().add(mc);
-				}
-			}
-		} catch(NoClassDefFoundError e) {}
+		for(Method method : methodList) {
 
-		if(!found) {
-			return null;
-		} else {
-			return cc;
+			MethodContent mc = MethodParser.parse(method);
+			if(mc != null) {
+				found = true;
+				cc.getMethodList().add(mc);
+			}
 		}
+
+		return found ? cc : null;
 	}
 }

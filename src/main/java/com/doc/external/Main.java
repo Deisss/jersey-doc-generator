@@ -8,6 +8,8 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -18,6 +20,7 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 
 import com.doc.jersey.content.ClassContent;
+import com.doc.jersey.loader.JarLoader;
 import com.doc.jersey.loader.PartLoader;
 import com.doc.jersey.parser.ClassParser;
 
@@ -81,6 +84,7 @@ public class Main {
 	 * @param file The file we are loading
 	 * @param className The class name we are searching to parse
 	 * @return The class loaded
+	 * @throws ClassNotFoundException 
 	 */
 	public static Class<?> preLoader(File file, String className) {
 		try {
@@ -94,7 +98,7 @@ public class Main {
 			// Convert File to a URL
 			URL url = new URL("file:" + jar);
 			URL[] urls = new URL[]{url};
-			PartLoader.setLoader(new URLClassLoader(urls));
+			PartLoader.addLoader(new URLClassLoader(urls));
 			return PartLoader.load(className);
 
 		} catch (MalformedURLException e) {
@@ -104,6 +108,33 @@ public class Main {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Recursive load external jar dependencies
+	 * 
+	 * @param folder
+	 * @throws IOException 
+	 * @throws ClassNotFoundException 
+	 */
+	public static void preLoadDependencies(String folder) throws IOException {
+		File[] fileList = new File(folder).listFiles();
+		List<File> directoryList = new ArrayList<File>(fileList.length);
+
+		// Load jar and get directory
+		for(File file : fileList) {
+			if(file.isDirectory()) {
+				directoryList.add(file);
+			} else if(file.getName().endsWith(".jar")) {
+				System.out.println("Loading jar : " + file.getName());
+				JarLoader.load(file.getAbsolutePath());
+			}
+		}
+
+		// Load sub directory search
+		for(File directory : directoryList) {
+			preLoadDependencies(directory.getAbsolutePath());
+		}
 	}
 
 	/**
@@ -137,6 +168,7 @@ public class Main {
 	 * @throws JsonMappingException 
 	 * @throws JsonGenerationException 
 	 * @throws ParseException 
+	 * @throws ClassNotFoundException 
 	 */
 	public static void main(String[] args) throws JsonGenerationException, JsonMappingException, IOException, ParseException {
 		CommandLineParser parser = new PosixParser();
@@ -154,6 +186,14 @@ public class Main {
 			File testFolder = new File(tmpFolder);
 			if(testFolder.exists() && testFolder.isDirectory() && testFolder.canWrite()) {
 				userFolder = tmpFolder;
+			}
+		}
+
+		// Detect dependencies resolve
+		if(cmd.hasOption("d")) {
+			String[] dependencies = cmd.getOptionValues("d");
+			for(String dep : dependencies) {
+				preLoadDependencies(dep);
 			}
 		}
 

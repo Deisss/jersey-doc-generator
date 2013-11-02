@@ -65,6 +65,13 @@ public class Cli {
 		 * -----------------------
 		 * 
 		 */
+		// External loader
+		Option d = OptionBuilder.create("d");
+		d.setLongOpt("dependencies");
+		d.setDescription("Add dependency (jar) resolver, to remove 'no class def found' error");
+		d.setArgs(20);
+
+		// Print help
 		Option h = OptionBuilder.create("h");
 		h.setLongOpt("help");
 		h.setDescription("Print help");
@@ -80,6 +87,7 @@ public class Cli {
 		tmp.setDescription("The tmp folder to use (default is /tmp or C:\\ depending on OS");
 		tmp.setArgs(1);
 
+		options.addOption(d);
 		options.addOption(h);
 		options.addOption(o);
 		options.addOption(tmp);

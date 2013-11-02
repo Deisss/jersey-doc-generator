@@ -1,6 +1,9 @@
 package com.doc.jersey.loader;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
 
 /**
  * Dynamic load class regarding their name
@@ -9,14 +12,17 @@ import java.net.URLClassLoader;
  * @version 0.1
  */
 public class PartLoader {
-	private static URLClassLoader loader;
+	private static ArrayList<URLClassLoader> loaderList;
 
 	/**
 	 * Set the loader used to run system
 	 * @param ucl The loader
 	 */
-	public static void setLoader(URLClassLoader ucl) {
-		loader = ucl;
+	public static void addLoader(URLClassLoader ucl) {
+		if(loaderList == null) {
+			loaderList = new ArrayList<URLClassLoader>();
+		}
+		loaderList.add(ucl);
 	}
 
 	/**
@@ -27,14 +33,28 @@ public class PartLoader {
 	 * @return The class loaded
 	 */
 	public static Class<?> load(String name) {
-		if(loader == null) {
+		if(loaderList == null) {
 			return null;
 		}
 
-		try {
-			return loader.loadClass(name);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+		String error = "";
+		boolean found = false;
+
+		for(URLClassLoader loader : loaderList) {
+			try {
+				Class<?> cls = loader.loadClass(name);
+				found = true;
+				return cls;
+			} catch (ClassNotFoundException e) {
+				StringWriter sw = new StringWriter();
+				PrintWriter pw = new PrintWriter(sw);
+				e.printStackTrace(pw);
+				error = sw.toString();
+			}
+		}
+
+		if(!found) {
+			System.err.println(error);
 		}
 
 		return null;
