@@ -77,9 +77,11 @@ we can now use jersey-doc-generator (assuming project is located on %PRJ% folder
 
 **To start jersey-doc-generator:**
 
-    java -jar ./target/jersey-doc-generator-0.0.1.jar -p "%PRJ%/build/classes" -c "com.mycompany.RootResource"
+    java -jar ./target/jersey-doc-generator-0.0.1.jar -p "%PRJ%/build/classes" -c "com.mycompany.RootResource" -o "/tmp/result.json"
 
 Where build/classes contains all *.class project file, with same structure (`com/mycompany/RootResource.class`).
+
+__Note__: you may need to include external jar dependencies (see below)
 
 It will produce the following result:
 
@@ -145,6 +147,7 @@ We recommand you [this template](https://github.com/Deisss/jersey-doc-template) 
 present results in a readable way.
 
 This project is a simple html page with some javascript, able to load data stored into files, and show them to user.
+It can also test request for you.
 
 
 
@@ -155,10 +158,21 @@ On this example we see the most basic case using -c and -p arguments, here is th
   * **--help**: display help
   * **--class** or **-c**: Specify the class to start from (in the example: com.mycompany.RootResource) (+1 arg: the class name)
   * **--path** or **-p**: The path where builded content is located (for Eclipse: ./build/classes from project root) (+1 arg: the path)
-  * **--out** or **-o**: Don't print result on console, print into given file (+1 arg: the path)
+  * **--out** or **-o**: Print result into given file (+1 arg: the path)
+  * **--dependencies** or **-d**: a list of path to check jar inside, and load those jar before parsing
   * **--type** or **-t**: The type (by default it's class), can be jar or war also, define the type of document the system have to parse
   * **--tmp**: change the tmp folder, by default it's /tmp on linux, and C:\\ on windows.
 
+__Example__:
+```
+java -jar jersey-doc-generator-0.0.1-jar-with-dependencies.jar -p "/opt/myprogram/build/classes" \
+-c "com.myprogram.api.RootResource" \
+-o "/tmp/myprogram.json" \
+-d "/opt/myprogram/WebContent/WEB-INF" "/opt/tomcat/apache-tomcat-7.0.39/lib"
+```
+
+Here system will take care of loading catalina jar to use for example javax.servlet.OutputStream and your
+custom jar from your own project. Allowing to remove any "No class def found" error.
 
 
 Limitations
@@ -169,6 +183,7 @@ Some limitation exist on this project:
   * The system will generate a .jar file of your project if you are using it from *.class
     * for this reason, jar executable (from JDK) should be OK from command line (type jar in command line to check)
     * this program should be authorize to write on tmp folder (see --help to change that folder)
+  * The system is not able to found missing jar/class for you, you must provide path to load with -d...
   * If there is too many sub resource (include inside include inside include...) the system may raise a StackOverflowError
 
 Except the -c problem, all of them should almost never be a problem.
