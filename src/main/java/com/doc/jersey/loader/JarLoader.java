@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.Enumeration;
-import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public class JarLoader {
@@ -15,12 +13,13 @@ public class JarLoader {
 	 * Try to load a jar as comme file
 	 * @param path
 	 * @throws IOException
-	 * @throws ClassNotFoundException
 	 */
+	@SuppressWarnings("resource")
 	public static void load(String path) throws IOException {
-		@SuppressWarnings("resource")
-		JarFile file = new JarFile(path);
-		Enumeration<JarEntry> e = file.entries();
+		/*@SuppressWarnings("resource")
+		JarFile file = new JarFile(path);*/
+		new JarFile(path);
+		//Enumeration<JarEntry> e = file.entries();
 
 		URL url = new URL("jar:file:" + path + "!/");
 		
@@ -36,7 +35,7 @@ public class JarLoader {
 			throw new IOException("Error, could not add URL to system classloader");
 		}
 		
-		while (e.hasMoreElements()) {
+		/*while (e.hasMoreElements()) {
 			JarEntry je = (JarEntry) e.nextElement();
 			if(je.isDirectory() || !je.getName().endsWith(".class")){
 				continue;
@@ -49,7 +48,7 @@ public class JarLoader {
 			}
 			catch(ClassNotFoundException ex) {}
 			catch(NoClassDefFoundError ez) {}
-		}
+		}*/
 
 	}
 }
