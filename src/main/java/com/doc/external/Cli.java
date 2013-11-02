@@ -54,6 +54,12 @@ public class Cli {
 		t.setDescription("Project type: war, jar, or class (default is class)");
 		t.setArgs(1);
 
+		// Path save selector
+		Option o = OptionBuilder.create("o");
+		o.setLongOpt("out");
+		o.setDescription("The file to save content, nothing = print on console");
+		o.setArgs(1);
+
 		options.addOption(p);
 		options.addOption(c);
 		options.addOption(t);
@@ -75,12 +81,6 @@ public class Cli {
 		Option h = OptionBuilder.create("h");
 		h.setLongOpt("help");
 		h.setDescription("Print help");
-
-		// Path selector
-		Option o = OptionBuilder.create("o");
-		o.setLongOpt("out");
-		o.setDescription("The file to save content, nothing = print on console");
-		o.setArgs(1);
 
 		// Class selector
 		Option tmp = OptionBuilder.create("tmp");

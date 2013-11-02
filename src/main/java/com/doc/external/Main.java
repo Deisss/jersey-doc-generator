@@ -152,11 +152,7 @@ public class Main {
 		ClassContent cc = ClassParser.parse(loaded);
 
 		// We check if it's direct output or in file output
-		if(cmd.hasOption("o")) {
-			Output.toFile(new File(cmd.getOptionValue("o")), cc);
-		} else {
-			Output.toStream(System.out, cc);
-		}
+		Output.toFile(new File(cmd.getOptionValue("o")), cc);
 	}
 
 	/**
@@ -207,7 +203,7 @@ public class Main {
 		}
 
 		// Printing help in case of problem
-		if(!cmd.hasOption("p") && !cmd.hasOption("c")) {
+		if(!cmd.hasOption("p") || !cmd.hasOption("c") || !cmd.hasOption("o")) {
 			Cli.printHelp();
 
 		// Real application start
