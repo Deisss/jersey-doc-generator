@@ -160,6 +160,7 @@ On this example we see the most basic case using -c and -p arguments, here is th
   * **--path** or **-p**: The path where builded content is located (for Eclipse: ./build/classes from project root) (+1 arg: the path)
   * **--out** or **-o**: Print result into given file (+1 arg: the path)
   * **--dependencies** or **-d**: a list of path to check jar inside, and load those jar before parsing
+  * **--maven**: include the full .m2 maven repository as dependencies
   * **--type** or **-t**: The type (by default it's class), can be jar or war also, define the type of document the system have to parse
   * **--tmp**: change the tmp folder, by default it's /tmp on linux, and C:\\ on windows.
 
