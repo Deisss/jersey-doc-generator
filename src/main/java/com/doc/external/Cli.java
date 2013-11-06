@@ -77,6 +77,10 @@ public class Cli {
 		d.setDescription("Add dependency (jar) resolver, to remove 'no class def found' error");
 		d.setArgs(20);
 
+		Option m = OptionBuilder.create("maven");
+		m.setLongOpt("maven");
+		m.setDescription("Include all maven libraries as dependencies");
+
 		// Print help
 		Option h = OptionBuilder.create("h");
 		h.setLongOpt("help");
@@ -88,6 +92,7 @@ public class Cli {
 		tmp.setArgs(1);
 
 		options.addOption(d);
+		options.addOption(m);
 		options.addOption(h);
 		options.addOption(o);
 		options.addOption(tmp);
