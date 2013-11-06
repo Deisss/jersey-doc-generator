@@ -193,6 +193,12 @@ public class Main {
 			}
 		}
 
+		// Detect maven dependencies
+		if(cmd.hasOption("maven")) {
+			String mavenRepository = Maven.getRepository();
+			preLoadDependencies(mavenRepository);
+		}
+
 		// Detect parsing type
 		if(cmd.hasOption("t")) {
 			String parsingValue = cmd.getOptionValue("t");
